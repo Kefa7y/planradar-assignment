@@ -1,7 +1,15 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# frozen_string_literal: true
+
+user1 = User.create(name: 'Mohamed', mail: 'mohamed.ash.roshdy@outlook.com', send_due_date_reminder: true,
+                    due_date_reminder_interval: 0, due_date_reminder_time: Time.parse('8:00').in_time_zone('Cairo'),
+                    time_zone: 'Cairo')
+
+user2 = User.create(name: 'Ashraf', mail: 'mohamed.ash.roshdy@gmail.com', send_due_date_reminder: false,
+                    due_date_reminder_interval: 0, due_date_reminder_time: Time.parse('9:00').in_time_zone('Europe/Vienna'),
+                    time_zone: 'Europe/Vienna')
+
+Ticket.create(title: 'Mohamed Ticket', description: 'This is Mohamed\'s Ticket', assigned_user_id: user1.id,
+              due_date: Date.tomorrow, status_id: 0, progress: 50)
+
+Ticket.create(title: 'Ashraf Ticket', description: 'This is Ashraf\'s Ticket', assigned_user_id: user2.id,
+              due_date: Date.yesterday, status_id: 1, progress: 90)
