@@ -2,4 +2,9 @@
 
 class User < ApplicationRecord
   has_many :tickets
+
+  # This is a stub function for more features to come concerning notification channel
+  def notification_channel
+    'email'
+  end
 end
