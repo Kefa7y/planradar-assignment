@@ -1,0 +1,49 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rake
+AllCops:
+  Exclude:
+    - "db/schema.rb"
+    - "db/seeds.rb"
+    - "lib/dopers/**/*"
+    - "config/** ^ !config/*"
+    - "bin/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "**/*.erb"
+    - "gendir/**/*"
+  TargetRubyVersion: 2.7.2
+
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  Details: >-
+    Add `# frozen_string_literal: true` to the top of the file. Frozen string
+    literals will become the default in a future Ruby version, and we want to
+    make sure we're ready.
+  EnforcedStyle: always
+  SupportedStyles:
+    # `always` will always add the frozen string literal comment to a file
+    # regardless of the Ruby version or if `freeze` or `<<` are called on a
+    # string literal. It is possible that this will create errors.
+    - always
+    # `always_true` will add the frozen string literal comment to a file,
+    # similarly to the `always` style, but will also change any disabled
+    # comments (e.g. `# frozen_string_literal: false`) to be enabled.
+    - always_true
+    # `never` will enforce that the frozen string literal comment does not
+    # exist in a file.
+    - never
+  SafeAutoCorrect: true
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 20
+Style/ClassAndModuleChildren:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
