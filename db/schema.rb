@@ -13,24 +13,25 @@
 ActiveRecord::Schema.define(version: 2022_12_02_184255) do
 
   create_table "tickets", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
+    t.string "title", null: false
+    t.text "description", null: false
     t.integer "assigned_user_id", null: false
     t.date "due_date"
-    t.integer "status_id"
-    t.integer "progress"
+    t.integer "status_id", default: 0
+    t.integer "progress", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assigned_user_id"], name: "index_tickets_on_assigned_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "mail"
-    t.boolean "send_due_date_reminder"
-    t.integer "due_date_reminder_interval"
+    t.string "name", null: false
+    t.string "mail", null: false
+    t.boolean "send_due_date_reminder", default: true
+    t.integer "due_date_reminder_interval", default: 0
     t.time "due_date_reminder_time"
     t.string "time_zone", limit: 60
+    t.index ["mail"], name: "index_users_on_mail", unique: true
   end
 
   add_foreign_key "tickets", "users", column: "assigned_user_id"
