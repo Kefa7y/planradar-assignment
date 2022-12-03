@@ -5,7 +5,6 @@ require 'spec_helper'
 RSpec.describe Ticket do
   describe '#user_due_date_reminder_time' do
     let(:result) { ticket.user_due_date_reminder_time }
-    # let(:ticket) { instance_spy(Ticket, id: ticket_id, user: user_stub) }
 
     context 'when due_date is blank' do
       let(:ticket) { described_class.new(title: 'title', description: 'description', due_date: nil) }
@@ -43,5 +42,54 @@ RSpec.describe Ticket do
   end
 
   describe '#schedule_user_due_date_reminder' do
+    let(:result) { ticket.schedule_user_due_date_reminder }
+
+    context 'when due_date is blank' do
+      let(:ticket) { described_class.new(title: 'title', description: 'description', due_date: nil) }
+
+      it 'returns nil' do
+        expect(result).to equal nil
+      end
+    end
+
+    context 'when due_date is present' do
+      let(:ticket) do
+        described_class.new(title: 'title', description: 'description', due_date: Date.parse('2022-10-20'))
+      end
+      let(:execution_time) { Time.current }
+      let(:jid) { 'dummy_jid' }
+
+      before do
+        allow(ticket).to receive(:user).and_return(user_stub)
+        allow(ticket).to receive(:user_due_date_reminder_time).and_return(execution_time)
+        allow(Ticket::DueDateReminderNotificationJob).to receive(:perform_at).and_return(jid)
+      end
+
+      context 'when user send_due_date_reminder is false' do
+        let(:user_stub) do
+          instance_spy(User, send_due_date_reminder?: false)
+        end
+
+        it 'returns nil' do
+          expect(result).to equal nil
+        end
+      end
+
+      context 'when user send_due_date_reminder is true' do
+        let(:user_stub) do
+          instance_spy(User, send_due_date_reminder?: true, notification_channel: 'email')
+        end
+
+        it 'returns scheduled job id' do
+          expect(result).to equal jid
+        end
+
+        it 'schedules Ticket::DueDateReminderNotificationJob' do
+          result
+          expect(Ticket::DueDateReminderNotificationJob).to have_received(:perform_at)
+            .once.with(execution_time, ticket.id, user_stub.notification_channel)
+        end
+      end
+    end
   end
 end
