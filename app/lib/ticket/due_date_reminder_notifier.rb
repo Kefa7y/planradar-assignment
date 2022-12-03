@@ -7,12 +7,9 @@ class Ticket
     def initialize(ticket_id, channel)
       @ticket = Ticket.find(ticket_id)
       @channel = channel
-      @user = @ticket.user
     end
 
     def notify
-      Rails.logger.debug("DueDateReminderNotifier ticket_id: #{ticket.id}, user_id:#{user.id}, channel: #{channel}")
-
       case channel
       when 'email'
         ::TicketMailer.with(ticket: @ticket).due_date_reminder_email.deliver_now

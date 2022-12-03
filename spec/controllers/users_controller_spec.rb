@@ -20,6 +20,10 @@ RSpec.describe UsersController do
       expect(response).to render_template('index')
     end
 
+    it 'renders _user template' do
+      expect(response).to render_template('_user')
+    end
+
     it 'returns the correct amount of users' do
       expect(JSON.parse(response.body)).to have_exactly(users.size).items
     end
@@ -36,8 +40,12 @@ RSpec.describe UsersController do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'renders index template' do
+    it 'renders show template' do
       expect(response).to render_template('show')
+    end
+
+    it 'renders _user template' do
+      expect(response).to render_template('_user')
     end
 
     it 'renders the correct user' do
