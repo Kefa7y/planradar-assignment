@@ -11,11 +11,11 @@ class Ticket
     end
 
     def notify
-      Sidekiq.logger.debug("DueDateReminderNotifier ticket_id: #{ticket.id}, user_id:#{user.id}, channel: #{channel}")
+      Rails.logger.debug("DueDateReminderNotifier ticket_id: #{ticket.id}, user_id:#{user.id}, channel: #{channel}")
 
       case channel
       when 'email'
-        TicketMailer.with(ticket: Ticket.first).due_date_reminder_email.deliver_now
+        ::TicketMailer.with(ticket: @ticket).due_date_reminder_email.deliver_now
       else
         raise StandardError, "Notification channel `#{channel}` is not supported"
       end
