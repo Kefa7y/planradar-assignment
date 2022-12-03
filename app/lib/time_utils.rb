@@ -2,8 +2,7 @@
 
 module TimeUtils
   class << self
-    def set_date_in_time(time, date_or_date_string)
-      date = date_or_date_string.is_a?(Date) ? date_or_date_string : Date.parse(date_or_date_string)
+    def set_date_in_time(time, date)
       time.change(year: date.year, month: date.month, day: date.day)
     end
 
@@ -12,7 +11,7 @@ module TimeUtils
     end
 
     def set_zone_in_time(time, time_zone)
-      ActiveSupport::TimeZone.new(time_zone).local_to_utc(time)
+      ActiveSupport::TimeZone.new(time_zone).local_to_utc(time).in_time_zone(time_zone)
     end
   end
 end
