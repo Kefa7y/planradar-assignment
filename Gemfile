@@ -48,6 +48,7 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec', '~> 3.10.0'
   gem 'rspec-collection_matchers'
+  gem 'rspec-json_expectations'
   gem 'rspec-rails', '~> 5.0.1'
   gem 'simplecov', '~> 0.21.2'
 end

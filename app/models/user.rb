@@ -17,6 +17,6 @@ class User < ApplicationRecord
   private
 
   def parse_due_date_time_with_zone
-    self.due_date_reminder_time = ActiveSupport::TimeZone.new(time_zone).local_to_utc(due_date_reminder_time)
+    self.due_date_reminder_time = TimeUtils.set_zone_in_time(due_date_reminder_time, time_zone)
   end
 end

@@ -1,17 +1,22 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  mail: MyString
-  send_due_date_reminder: 1
-  due_date_reminder_interval: 1
-  due_date_reminder_time: 2022-12-02 20:37:49
-  time_zone: MyString
+first:
+  name: Mohamed
+  mail: mohamed.ash.roshdy@outlook.com
+  send_due_date_reminder: true
+  due_date_reminder_interval: 0
+  due_date_reminder_time: '12:00AM'
+  time_zone: Cairo
 
-two:
-  name: MyString
-  mail: MyString
-  send_due_date_reminder: 1
+second:
+  name: Ashraf
+  mail: ashraf.roshdy@outlook.com
+  send_due_date_reminder: false
+
+third:
+  name: Roshdy
+  mail: roshdy@outlook.com
+  send_due_date_reminder: true
   due_date_reminder_interval: 1
-  due_date_reminder_time: 2022-12-02 20:37:49
-  time_zone: MyString
+  due_date_reminder_time: '2:00PM'
+  time_zone: Europe/Vienna

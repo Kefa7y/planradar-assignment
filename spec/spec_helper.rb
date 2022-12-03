@@ -10,10 +10,12 @@ require_relative '../config/environment'
 require 'spec_helper'
 require 'rspec/rails'
 require 'rspec/collection_matchers'
+require 'rspec/json_expectations'
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  ActiveRecord::Migration.maintain_test_schema!
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
