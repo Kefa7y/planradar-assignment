@@ -13,6 +13,8 @@ class Ticket < ApplicationRecord
   end
 
   def schedule_user_due_date_reminder
+    return unless user.send_due_date_reminder?
+
     Ticket::DueDateReminderNotificationJob.perform_at(user_due_date_reminder_time, id, user.notification_channel)
     # TODO: Add logic for job id persistence in case of user notification preference change
   end

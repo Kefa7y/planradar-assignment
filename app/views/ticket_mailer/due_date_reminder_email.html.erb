@@ -1,0 +1,13 @@
+<h1>Your ticket due date is approaching!</h1>
+
+<p>Hello <%= @user.name %>,</p>
+<p>Your ticket's due date is approaching! Please check the information below.</p>
+
+<h4>Ticket</h4>
+<p>
+  Title: <%= @ticket.title %><br>
+  Description: <%= @ticket.description %><br>
+  Due Date: <%= @ticket.due_date %><br>
+  Status: <%= @ticket.status_id %><br>
+  Progress: <%= @ticket.progress %><br>
+</p>

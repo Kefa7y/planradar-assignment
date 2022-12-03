@@ -15,7 +15,7 @@ class Ticket
 
       case channel
       when 'email'
-        # TODO: place mailer logic
+        TicketMailer.with(ticket: Ticket.first).due_date_reminder_email.deliver_now
       else
         raise StandardError, "Notification channel `#{channel}` is not supported"
       end
