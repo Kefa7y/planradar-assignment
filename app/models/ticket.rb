@@ -8,10 +8,10 @@ class Ticket < ApplicationRecord
   after_create :schedule_user_due_date_reminder
 
   def user_due_date_reminder_time
-    return if due_date.blank?
+    return nil if due_date.blank?
 
     notification_date = due_date - user.due_date_reminder_interval
-    TimeUtils.set_date_in_time(user.due_date_reminder_time, notification_date).in_time_zone(user.time_zone)
+    TimeUtils.set_date_in_time(user.due_date_reminder_time, notification_date)
   end
 
   def schedule_user_due_date_reminder
