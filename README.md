@@ -2,6 +2,7 @@
 
 This application uses SQLite as the main database, Sidekiq as the background task executer and Redis as storage for Sidekiq jobs.
 This task is not yet complete. Due to personal reasons, I could not start the task at the scheduled time, which caused the task to be submitted prematurely.
+You will find an `Insomnia.json` Insomnia V4 JSON file file in this repo, which contains an exported version of the Insomnia collection used to test this API.
 
 ### TODOs:
 
@@ -9,7 +10,6 @@ This task is not yet complete. Due to personal reasons, I could not start the ta
   - Changing user notification preferences after a notification has already been scheduled
   - Changing ticket due date after a notification has already been scheduled
   - Deleting ticket after a notification has already been scheduled
--
 - Finish writing unit tests
 - Adding Integration tests
 - Enhance README (more info about the code and how it operates)
