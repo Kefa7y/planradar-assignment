@@ -45,14 +45,14 @@ group :development do
 end
 
 group :test do
+  gem 'rails-controller-testing', '~> 1.0'
   gem 'rspec', '~> 3.10.0'
-  gem 'rspec-rails', '~> 5.0.1'
   gem 'rspec-collection_matchers'
-  gem "rails-controller-testing", "~> 1.0"
-  gem "simplecov", "~> 0.21.2"
+  gem 'rspec-rails', '~> 5.0.1'
+  gem 'simplecov', '~> 0.21.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'jbuilder', '~> 2.11'
 gem 'priority_queue_cxx'
-gem "jbuilder", "~> 2.11"
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

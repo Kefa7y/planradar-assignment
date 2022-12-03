@@ -8,3 +8,4 @@ production: Sends email using SMTP. Take note that the current SMTP settings in 
 
 Cases not handled:
 Changing user notification preferences after a notification has already been scheduled
+Changing ticket due date after a notification has already been scheduled

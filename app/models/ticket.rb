@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Ticket < ApplicationRecord
-  belongs_to :user, class_name: 'User', foreign_key: 'assigned_user_id'
+  belongs_to :user, class_name: 'User', foreign_key: 'assigned_user_id', inverse_of: :tickets
 
   after_create :schedule_user_due_date_reminder
 
