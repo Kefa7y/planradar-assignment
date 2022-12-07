@@ -2,7 +2,7 @@
 
 class Ticket
   class DueDateReminderNotifier
-    attr_accessor :ticket, :channel, :user
+    attr_accessor :ticket, :channel
 
     def initialize(ticket_id, channel)
       @ticket = Ticket.find(ticket_id)
