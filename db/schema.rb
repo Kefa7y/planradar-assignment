@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_02_184255) do
+ActiveRecord::Schema.define(version: 2022_12_07_194224) do
 
   create_table "tickets", force: :cascade do |t|
     t.string "title", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_12_02_184255) do
     t.integer "progress", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "jid", limit: 40
     t.index ["assigned_user_id"], name: "index_tickets_on_assigned_user_id"
   end
 

@@ -6,6 +6,7 @@ class Ticket < ApplicationRecord
   validates_presence_of :title, :description
 
   after_create :schedule_user_due_date_reminder
+  after_update :schedule_user_due_date_reminder, if: :saved_change_to_due_date?
 
   def user_due_date_reminder_time
     return nil if due_date.blank?
@@ -15,10 +16,19 @@ class Ticket < ApplicationRecord
   end
 
   def schedule_user_due_date_reminder
-    return if due_date.blank?
-    return unless user.send_due_date_reminder?
+    if due_date.blank? || !user.send_due_date_reminder?
+      self.jid = nil
+    else
+      # TODO: Add logic for job id persistence in case of user notification preference change OR due_date change
+      self.jid = Ticket::DueDateReminderNotificationJob.perform_at(user_due_date_reminder_time, id,
+                                                                   user.notification_channel)
+    end
 
-    Ticket::DueDateReminderNotificationJob.perform_at(user_due_date_reminder_time, id, user.notification_channel)
-    # TODO: Add logic for job id persistence in case of user notification preference change OR due_date change
+    if jid_changed?
+      SidekiqUtils.delete_scheduled_job_by_jid(jid_was)
+      save
+    end
+
+    jid
   end
 end
