@@ -81,7 +81,7 @@ RSpec.describe Ticket do
         end
 
         it 'returns scheduled job id' do
-          expect(result).to equal jid
+          expect(result).to eq jid
         end
 
         it 'schedules Ticket::DueDateReminderNotificationJob' do

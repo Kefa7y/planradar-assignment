@@ -49,7 +49,7 @@ RSpec.describe TicketsController do
     end
 
     it 'renders the correct ticket' do
-      expected = tickets(:first).serializable_hash
+      expected = tickets(:first).serializable_hash.except('jid')
       %w[due_date created_at updated_at].each do |key|
         expected[key] = expected[key].as_json
       end
@@ -57,19 +57,4 @@ RSpec.describe TicketsController do
       expect(response.body).to include_json expected
     end
   end
-
-  # test 'should create user' do
-  #   assert_difference('User.count') do
-  #     post users_url,
-  #          params: { user: { due_date_reminder_interval: @user.due_date_reminder_interval, due_date_reminder_time: @user.due_date_reminder_time, mail: @user.mail, name: @user.name, send_due_date_reminder: @user.send_due_date_reminder, time_zone: @user.time_zone } }, as: :json
-  #   end
-
-  #   assert_response 201
-  # end
-
-  # test 'should update user' do
-  #   patch user_url(@user),
-  #         params: { user: { due_date_reminder_interval: @user.due_date_reminder_interval, due_date_reminder_time: @user.due_date_reminder_time, mail: @user.mail, name: @user.name, send_due_date_reminder: @user.send_due_date_reminder, time_zone: @user.time_zone } }, as: :json
-  #   assert_response 200
-  # end
 end

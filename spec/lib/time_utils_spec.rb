@@ -30,7 +30,7 @@ RSpec.describe TimeUtils do
       let(:expected) { '08:00AM EET' }
 
       it 'returns a string containing time of day and time zone' do
-        time = Time.parse(expected)
+        time = Time.zone.parse(expected)
         expect(described_class.parse_time_of_day(time)).to eq expected
       end
     end

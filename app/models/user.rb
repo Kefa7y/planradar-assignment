@@ -3,9 +3,9 @@
 class User < ApplicationRecord
   has_many :tickets, dependent: :destroy, foreign_key: 'assigned_user_id', inverse_of: :user
 
-  validates_presence_of :name, :mail
-  validates_presence_of :due_date_reminder_time, :time_zone, if: :send_due_date_reminder?
-  validates_uniqueness_of :mail
+  validates :name, :mail, presence: true
+  validates :due_date_reminder_time, :time_zone, presence: { if: :send_due_date_reminder? }
+  validates :mail, uniqueness: true
 
   before_save :parse_due_date_time_with_zone, if: :send_due_date_reminder?
   after_update :reschedule_tickets_due_date_reminder, if: :reschedule_tickets_due_date_reminder?
