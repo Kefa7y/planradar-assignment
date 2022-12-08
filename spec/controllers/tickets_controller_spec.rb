@@ -152,7 +152,7 @@ RSpec.describe TicketsController do
       end
 
       it 'renders the correct ticket' do
-        expect(response.body).to include_json parse_ticket_to_json(tickets(:first).reload)
+        expect(response.body).to include_json parse_ticket_to_json(ticket)
       end
     end
 
