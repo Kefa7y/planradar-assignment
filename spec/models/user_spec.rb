@@ -54,6 +54,26 @@ RSpec.describe User do
   end
 
   describe '#reschedule_tickets_due_date_reminder?' do
+    subject!(:result) do
+      change_variables.each do |change_variable|
+        function_name = "saved_change_to_#{change_variable}?"
+        allow(user).to receive(function_name.to_sym).and_call_original
+      end
+
+      user.send(:reschedule_tickets_due_date_reminder?)
+    end
+
     let(:change_variables) { %w[send_due_date_reminder due_date_reminder_interval due_date_reminder_time] }
+
+    it 'invokes all change variables ActiveModel saved_change functions' do
+      change_variables.each do |change_variable|
+        function_name = "saved_change_to_#{change_variable}?"
+        expect(user).to have_received(function_name.to_sym).once.with(no_args)
+      end
+    end
+
+    it 'returns false if change_variables did not change' do
+      expect(result).to equal(false)
+    end
   end
 end
