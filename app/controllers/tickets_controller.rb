@@ -29,6 +29,7 @@ class TicketsController < ApplicationController
 
   def destroy
     @ticket.destroy
+    head :ok
   end
 
   private
