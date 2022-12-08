@@ -7,6 +7,7 @@ class Ticket < ApplicationRecord
 
   after_create :schedule_user_due_date_reminder
   after_update :schedule_user_due_date_reminder, if: :saved_change_to_due_date?
+  before_destroy { SidekiqUtils.delete_scheduled_job_by_jid(jid) }
 
   def user_due_date_reminder_time
     return nil if due_date.blank?
