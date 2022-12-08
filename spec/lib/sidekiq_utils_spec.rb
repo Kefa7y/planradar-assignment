@@ -15,14 +15,14 @@ RSpec.describe SidekiqUtils do
       let(:sidekiq_scheduled_set_stub) { instance_spy(Sidekiq::ScheduledSet) }
 
       context 'when jid exists' do
-        let(:sidekiq_job_stub) { instance_spy(Sidekiq::SortedEntry) }
-
-        before do
+        subject!(:result) do
           allow(Sidekiq::ScheduledSet).to receive(:new).and_return(sidekiq_scheduled_set_stub)
           allow(sidekiq_scheduled_set_stub).to receive(:find_job).with(jid).and_return(sidekiq_job_stub)
           allow(sidekiq_job_stub).to receive(:delete).and_return(true)
           @result = described_class.delete_scheduled_job_by_jid(jid)
         end
+
+        let(:sidekiq_job_stub) { instance_spy(Sidekiq::SortedEntry) }
 
         it('calls Sidekiq::ScheduledSet.new') do
           expect(Sidekiq::ScheduledSet).to have_received(:new).once.with(no_args)
@@ -37,12 +37,12 @@ RSpec.describe SidekiqUtils do
         end
 
         it('returns true') do
-          expect(@result).to eq true # rubocop:disable Rails/InstanceVariable
+          expect(result).to eq true
         end
       end
 
       context 'when jid does not exist' do
-        before do
+        subject!(:result) do
           allow(Sidekiq::ScheduledSet).to receive(:new).and_return(sidekiq_scheduled_set_stub)
           allow(sidekiq_scheduled_set_stub).to receive(:find_job).with(jid).and_return(nil)
           @result = described_class.delete_scheduled_job_by_jid(jid)
@@ -57,7 +57,7 @@ RSpec.describe SidekiqUtils do
         end
 
         it('returns false') do
-          expect(@result).to eq false # rubocop:disable Rails/InstanceVariable
+          expect(result).to eq false
         end
       end
     end

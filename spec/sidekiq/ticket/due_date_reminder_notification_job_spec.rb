@@ -6,16 +6,16 @@ RSpec.describe Ticket::DueDateReminderNotificationJob do
   let(:job) { described_class.new }
 
   describe '#perform' do
-    let(:ticket_id) { 1 }
-    let(:notification_channel) { 'email' }
-    let(:notify_return) { 'Notified' }
-    let(:notifier_stub) { instance_spy(Ticket::DueDateReminderNotifier) }
-
-    before do
+    subject! do
       allow(Ticket::DueDateReminderNotifier).to receive(:new).and_return(notifier_stub)
       allow(notifier_stub).to receive(:notify).and_return(notify_return)
       job.perform(ticket_id, notification_channel)
     end
+
+    let(:ticket_id) { 1 }
+    let(:notification_channel) { 'email' }
+    let(:notify_return) { 'Notified' }
+    let(:notifier_stub) { instance_spy(Ticket::DueDateReminderNotifier) }
 
     it 'calls new on Ticket::DueDateReminderNotifier' do
       expect(Ticket::DueDateReminderNotifier).to have_received(:new).once.with(ticket_id, notification_channel)

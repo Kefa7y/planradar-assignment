@@ -26,7 +26,7 @@ RSpec.describe Ticket::DueDateReminderNotifier do
 
   describe '#notify' do
     context 'when assigned channel is email' do
-      before do
+      subject! do
         notifier.notify
       end
 

@@ -17,15 +17,14 @@ RSpec.describe User do
   end
 
   describe '#parse_due_date_time_with_zone' do
-    let(:expected_time) { due_date_reminder_time + 1.day }
-    let(:result) { user.send(:parse_due_date_time_with_zone) }
-
-    before do
+    subject!(:result) do
       allow(TimeUtils).to receive(:set_zone_in_time).and_return(expected_time)
+      user.send(:parse_due_date_time_with_zone)
     end
 
+    let(:expected_time) { due_date_reminder_time + 1.day }
+
     it 'invokes TimeUtils.set_zone_in_time with the correct parameters' do
-      result
       expect(TimeUtils).to have_received(:set_zone_in_time)
         .once.with(due_date_reminder_time, time_zone)
     end
@@ -33,5 +32,28 @@ RSpec.describe User do
     it 'returns the return value from TimeUtils.set_zone_in_time' do
       expect(result).to equal expected_time
     end
+  end
+
+  describe '#reschedule_tickets_due_date_reminder' do
+    subject! do
+      allow(user).to receive(:tickets).and_return(tickets_array)
+      user.reschedule_tickets_due_date_reminder
+    end
+
+    let(:ticket_stub_one) { instance_spy(Ticket) }
+    let(:ticket_stub_two) { instance_spy(Ticket) }
+    let(:tickets_array) { [ticket_stub_one, ticket_stub_two] }
+
+    it 'invokes tickets on User instance' do
+      expect(user).to have_received(:tickets).once.with(no_args)
+    end
+
+    it 'invokes schedule_user_due_date_reminder on each member of tickets array' do
+      expect(tickets_array).to all(have_received(:schedule_user_due_date_reminder).once.with(no_args))
+    end
+  end
+
+  describe '#reschedule_tickets_due_date_reminder?' do
+    let(:change_variables) { %w[send_due_date_reminder due_date_reminder_interval due_date_reminder_time] }
   end
 end

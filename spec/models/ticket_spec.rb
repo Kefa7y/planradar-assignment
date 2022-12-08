@@ -4,10 +4,14 @@ require 'spec_helper'
 
 RSpec.describe Ticket do
   describe '#user_due_date_reminder_time' do
-    let(:result) { ticket.user_due_date_reminder_time }
+    subject(:result) { ticket.user_due_date_reminder_time }
 
     context 'when due_date is blank' do
       let(:ticket) { described_class.new(title: 'title', description: 'description', due_date: nil) }
+
+      before do
+        result
+      end
 
       it 'returns nil' do
         expect(result).to equal nil
@@ -27,6 +31,7 @@ RSpec.describe Ticket do
       before do
         allow(TimeUtils).to receive(:set_date_in_time).and_return(test_time)
         allow(ticket).to receive(:user).and_return(user_stub)
+        result
       end
 
       it 'returns nil' do
@@ -41,11 +46,16 @@ RSpec.describe Ticket do
     end
   end
 
+  # TODO: Enrich
   describe '#schedule_user_due_date_reminder' do
-    let(:result) { ticket.schedule_user_due_date_reminder }
+    subject(:result) { ticket.schedule_user_due_date_reminder }
 
     context 'when due_date is blank' do
       let(:ticket) { described_class.new(title: 'title', description: 'description', due_date: nil) }
+
+      before do
+        result
+      end
 
       it 'returns nil' do
         expect(result).to equal nil
@@ -63,6 +73,7 @@ RSpec.describe Ticket do
         allow(ticket).to receive(:user).and_return(user_stub)
         allow(ticket).to receive(:user_due_date_reminder_time).and_return(execution_time)
         allow(Ticket::DueDateReminderNotificationJob).to receive(:perform_at).and_return(jid)
+        result
       end
 
       context 'when user send_due_date_reminder is false' do
